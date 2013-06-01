@@ -9,13 +9,12 @@ module Configus
       end
       def method_missing(meth, *args, &block)
         key = meth.to_sym
-        binding.pry
-        #if block_given?
-	#  env = Environment.new(&block)
-        #  value = env.data          
-        #else
-          value = args[0]  
-        #end
+        if block.nil?
+          value = args[0]
+        else
+          env = Environment.new(&block)
+          value = env.data
+        end
         @data[key] = value
       end
     end
